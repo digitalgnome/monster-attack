@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <div id="app">
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" :style="{width: playerHealth +  '%'}" style="background-color: green; margin: 0; color: white; min-width: 5%;">
+                        <span class="health-value">{{ playerHealth }}</span class="health-value">
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <template>
+                        <div class="healthbar text-center" :style="{width: monsterHealth + '%'}" style="background-color: green; margin: 0; color: white; min-width: 5%;">
+                            <span class="health-value">{{ monsterHealth }}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+        <section class="row controls">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startGame">START NEW GAME</button>
+            </div>
+        </section>
+        <section class="row controls" v-if="showControls">
+            <div class="small-12 columns">
+                <button id="attack" :disabled="disableButton" @click="attack">ATTACK</button>
+                <button id="special-attack" :disabled="disableButton" @click.stop.prevent="specialAttack">SPECIAL ATTACK</button>
+                <button id="heal" :disabled="disableButton" @click="heal">HEAL</button>
+                <button id="give-up" :disabled="disableButton" @click="giveUp">GIVE UP</button>
+            </div>
+        </section>
+        <section class="row log">
+            <div class="small-12 columns">
+                <ul>
+                    <li v-for="(record, i) in gameRecord">
+                        <template>
+                            <div v-if="i % 2 === 0" class="monster-turn">
+                                {{ record }}
+                            </div>
+                            <div v-else class="player-turn">
+                                {{ record }}
+                            </div>
+                        </template>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
